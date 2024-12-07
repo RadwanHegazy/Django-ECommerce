@@ -18,9 +18,11 @@ class User (AbstractUser) :
     username = None
 
     email = models.EmailField(unique=True)
-    phone = PhoneNumberField()
+    phone = PhoneNumberField(null=True, blank=True)
     full_name = models.CharField(max_length=225)
-    picture = models.ImageField(upload_to='user-pics/', default='user.png')
+    picture = models.ImageField(upload_to='user-pics/', null=True, blank=True)
+    picture_url = models.URLField(null=True, blank=True)
+    password = models.TextField(null=True, blank=True)
 
     REQUIRED_FIELDS = ['full_name','phone']
     USERNAME_FIELD = 'email'
