@@ -40,6 +40,7 @@ MASTER_APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework',
     "phonenumber_field",
+    'drf_yasg',
 ]
 
 MY_APPS = [
