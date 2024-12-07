@@ -38,12 +38,17 @@ MASTER_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'rest_framework'
+    'rest_framework',
+    "phonenumber_field",
 ]
 
-LOCAL_APPS = []
+MY_APPS = [
+    'users',
+    'dj_auth_package',
+    'social_auth',
+]
 
-INSTALLED_APPS = MASTER_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = MASTER_APPS + THIRD_PARTY_APPS + MY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -116,3 +121,76 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ]
+}
+
+# NOTE: you will use this options for send the OTP code for users in forget password endpoint.
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
+# Social Auth Section
+def fb_save_data(*args, **kwargs) : 
+    from users.models import User, LoginByChoices
+    user = kwargs['user'] # the incomming user from the social platfrom
+    u, _ = User.objects.get_or_create(
+        email=user['email'],
+        full_name=user['name'],
+        login_by = LoginByChoices.facebook.value
+    )
+    u.save()
+    return u
+
+def google_save_data(*args, **kwargs) : 
+    from users.models import User, LoginByChoices
+    user = kwargs['user'] # the incomming user from the social platfrom
+    print('user from google : ', user)
+    u, _ = User.objects.get_or_create(
+        email=user['email'],
+        full_name=user['name'],
+        login_by=LoginByChoices.google.value,
+        picture_url=user['picture']
+    )
+    u.save()
+    return u
+
+
+SOCIAL_AUTH = {
+    
+    'google' : {
+        'client_id' : os.getenv('GOOGLE_CLIENT_ID'),
+        'client_secret' : os.getenv('GOOGLE_CLIENT_SECRET'),
+        'redirect_url' : 'http://localhost:8000/auth/google/', # your frontend server
+        'save_user_data' : google_save_data
+    },
+    
+    'facebook' : {
+        'client_id' : os.getenv('FB_CLIENT_ID'),
+        'client_secret' : os.getenv('FB_CLIENT_SECRET'),
+        'redirect_url' : 'http://localhost:8000/user/social/facebook/', # your frontend server,
+        'save_user_data' : fb_save_data
+
+    },
+
+    # NOTE: Set it blank because i'm not gonna use it
+    'github' : {
+        'client_id' : '',
+        'client_secret' : '',
+        'redirect_url' : '', # your frontend server
+        'save_user_data' : None
+    }
+
+
+}
+
+
