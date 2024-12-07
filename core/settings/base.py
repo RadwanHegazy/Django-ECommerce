@@ -43,7 +43,8 @@ THIRD_PARTY_APPS = [
 ]
 
 MY_APPS = [
-    'users'
+    'users',
+    'dj_auth_package',
 ]
 
 INSTALLED_APPS = MASTER_APPS + THIRD_PARTY_APPS + MY_APPS
@@ -121,3 +122,17 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ]
+}
+
+# NOTE: you will use this options for send the OTP code for users in forget password endpoint.
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "EMAIL_HOST"
+EMAIL_HOST_USER = "YOUR_EMAIL"
+EMAIL_HOST_PASSWORD = "YOUR_PASSWORD"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
