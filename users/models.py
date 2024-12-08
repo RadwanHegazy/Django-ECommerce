@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
 from phonenumber_field.modelfields import PhoneNumberField
-
+from cloudinary.models import CloudinaryField
 
 class LoginByChoices(models.Choices) :
     email = 'email'
@@ -20,8 +20,7 @@ class User (AbstractUser) :
     email = models.EmailField(unique=True)
     phone = PhoneNumberField(null=True, blank=True)
     full_name = models.CharField(max_length=225)
-    picture = models.ImageField(upload_to='user-pics/', null=True, blank=True)
-    picture_url = models.URLField(null=True, blank=True)
+    picture = CloudinaryField("image",folder='user-pics/', null=True, blank=True)
     password = models.TextField(null=True, blank=True)
 
     REQUIRED_FIELDS = ['full_name','phone']

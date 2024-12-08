@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from social_auth.social_auth_settings import SOCIAL_AUTH
 
 load_dotenv()
 
@@ -140,58 +141,14 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
-# Social Auth Section
-def fb_save_data(*args, **kwargs) : 
-    from users.models import User, LoginByChoices
-    user = kwargs['user'] # the incomming user from the social platfrom
-    u, _ = User.objects.get_or_create(
-        email=user['email'],
-        full_name=user['name'],
-        login_by = LoginByChoices.facebook.value
-    )
-    u.save()
-    return u
 
-def google_save_data(*args, **kwargs) : 
-    from users.models import User, LoginByChoices
-    user = kwargs['user'] # the incomming user from the social platfrom
-    print('user from google : ', user)
-    u, _ = User.objects.get_or_create(
-        email=user['email'],
-        full_name=user['name'],
-        login_by=LoginByChoices.google.value,
-        picture_url=user['picture']
-    )
-    u.save()
-    return u
+# Cloudinary conf
+import cloudinary
 
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),      
+    api_secret=os.getenv("CLOUDINARY_API_SECRET") 
+)
 
-SOCIAL_AUTH = {
-    
-    'google' : {
-        'client_id' : os.getenv('GOOGLE_CLIENT_ID'),
-        'client_secret' : os.getenv('GOOGLE_CLIENT_SECRET'),
-        'redirect_url' : 'http://localhost:8000/auth/google/', # your frontend server
-        'save_user_data' : google_save_data
-    },
-    
-    'facebook' : {
-        'client_id' : os.getenv('FB_CLIENT_ID'),
-        'client_secret' : os.getenv('FB_CLIENT_SECRET'),
-        'redirect_url' : 'http://localhost:8000/user/social/facebook/', # your frontend server,
-        'save_user_data' : fb_save_data
-
-    },
-
-    # NOTE: Set it blank because i'm not gonna use it
-    'github' : {
-        'client_id' : '',
-        'client_secret' : '',
-        'redirect_url' : '', # your frontend server
-        'save_user_data' : None
-    }
-
-
-}
-
-
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
