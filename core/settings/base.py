@@ -42,6 +42,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     "phonenumber_field",
     'drf_yasg',
+    'django_filters',
 ]
 
 MY_APPS = [
@@ -49,6 +50,7 @@ MY_APPS = [
     'dj_auth_package',
     'social_auth',
     'category',
+    'product',
 ]
 
 INSTALLED_APPS = MASTER_APPS + THIRD_PARTY_APPS + MY_APPS
