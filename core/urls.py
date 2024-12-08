@@ -16,5 +16,6 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/user/',include('dj_auth_package.urls')),
+    path('api/v1/category/', include('category.urls')),
     path('__docs__/', schema_view.with_ui('swagger', cache_timeout=0), name='docs'),
 ]

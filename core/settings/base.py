@@ -48,6 +48,7 @@ MY_APPS = [
     'users',
     'dj_auth_package',
     'social_auth',
+    'category',
 ]
 
 INSTALLED_APPS = MASTER_APPS + THIRD_PARTY_APPS + MY_APPS
