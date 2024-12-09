@@ -51,7 +51,8 @@ MY_APPS = [
     'social_auth',
     'category',
     'product',
-    'comment'
+    'comment',
+    'product_image'
 ]
 
 INSTALLED_APPS = MASTER_APPS + THIRD_PARTY_APPS + MY_APPS

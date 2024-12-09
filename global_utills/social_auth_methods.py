@@ -15,7 +15,6 @@ def fb_save_data(*args, **kwargs) :
 
 def google_save_data(*args, **kwargs) : 
     from users.models import User, LoginByChoices
-    import requests
     user = kwargs['user'] # the incomming user from the social platfrom
     u, _ = User.objects.get_or_create(
         email=user['email'],
