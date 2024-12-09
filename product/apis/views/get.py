@@ -4,6 +4,7 @@ from django.core.cache import cache
 from datetime import timedelta
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from global_utills.pagination import CustomPagination
 
 class GetProductsView (ListAPIView) : 
     """Get All Products"""
@@ -11,6 +12,7 @@ class GetProductsView (ListAPIView) :
     filter_backends = (SearchFilter,DjangoFilterBackend )
     search_fields = ['title','description']
     filterset_fields = ['category']
+    pagination_class = CustomPagination
     
     def get_queryset(self):
         query = cache.get('products', None)
