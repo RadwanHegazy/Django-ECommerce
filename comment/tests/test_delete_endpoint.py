@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .base import generate_comment, generate_headers
+from global_utills.base_test import generate_comment, generate_headers
 from django.urls import reverse
 
 class TestDeleteEndpoint(TestCase) :

@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
-from .base import generate_product, generate_comment
+from global_utills.base_test import generate_product, generate_comment
 
 class TestGetEndpoint(TestCase) :
     

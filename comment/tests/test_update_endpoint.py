@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .base import generate_headers, generate_comment
+from global_utills.base_test import generate_headers, generate_comment
 from django.urls import reverse
 
 class TestGetEndpoint(TestCase) :
