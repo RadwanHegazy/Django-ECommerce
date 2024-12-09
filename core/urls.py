@@ -1,4 +1,3 @@
-from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.contrib import admin
@@ -18,5 +17,6 @@ urlpatterns = [
     path('api/v1/user/',include('dj_auth_package.urls')),
     path('api/v1/category/', include('category.urls')),
     path('api/v1/product/', include('product.urls')),
+    path('api/v1/comment/', include('comment.urls')),
     path('__docs__/', schema_view.with_ui('swagger', cache_timeout=0), name='docs'),
 ]
