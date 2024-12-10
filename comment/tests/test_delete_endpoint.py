@@ -16,7 +16,11 @@ class TestDeleteEndpoint(TestCase) :
         repsonse = self.client.delete(reverse('delete_comment', args=[2]),headers=generate_headers())
         self.assertEqual(repsonse.status_code, 404)
 
-    def test_delete_comment_success(self) : 
+    def test_delete_comment_has_no_permissions(self) : 
         response = self.client.delete(self.endpoint_url, headers=generate_headers())
+        self.assertEqual(response.status_code, 403)
+        
+    def test_delete_comment_has_permissions(self) : 
+        response = self.client.delete(self.endpoint_url, headers=generate_headers(self.comment.user))
         self.assertEqual(response.status_code, 204)
         
