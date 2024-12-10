@@ -52,7 +52,8 @@ MY_APPS = [
     'category',
     'product',
     'comment',
-    'product_image'
+    'product_image',
+    "newsletter",
 ]
 
 INSTALLED_APPS = MASTER_APPS + THIRD_PARTY_APPS + MY_APPS
@@ -157,3 +158,15 @@ cloudinary.config(
 )
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+# Celery Conf
+# CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+# CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TIMEZONE = 'EET'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Cairo'
