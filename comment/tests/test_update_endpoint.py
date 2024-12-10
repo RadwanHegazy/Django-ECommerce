@@ -1,5 +1,5 @@
 from django.test import TestCase
-from global_utills.base_test import generate_headers, generate_comment
+from global_utills.base_test import generate_headers, generate_comment, generate_user
 from django.urls import reverse
 
 class TestGetEndpoint(TestCase) :
@@ -8,6 +8,7 @@ class TestGetEndpoint(TestCase) :
         self.endpoint_url = reverse('update_comment',args=[self.comment.id])
         return super().setUp()
     
+        
     def test_create_unauthorized_method(self) : 
         response = self.client.put(self.endpoint_url)
         self.assertEqual(response.status_code, 401)
@@ -21,9 +22,14 @@ class TestGetEndpoint(TestCase) :
         self.assertNotEqual(response.status_code, 201)
         
 
-    def test_update_comment_success(self) : 
+    def test_update_comment_no_permissions(self) : 
         response = self.client.put(self.endpoint_url, headers=generate_headers(),data={
             'content' : 'updated test content'
         }, content_type='application/json')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 403)
         
+    def test_update_comment_has_permissions(self) : 
+        response = self.client.put(self.endpoint_url, headers=generate_headers(user=self.comment.user),data={
+            'content' : 'updated test content'
+        }, content_type='application/json')
+        self.assertEqual(response.status_code, 200)
