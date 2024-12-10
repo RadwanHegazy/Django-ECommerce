@@ -161,9 +161,6 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # Celery Conf
-# CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
-# CELERY_BROKER_URL = 'redis://localhost:6379/0'
-
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TIMEZONE = 'EET'
