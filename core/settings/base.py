@@ -167,3 +167,5 @@ CELERY_TIMEZONE = 'EET'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Africa/Cairo'
+
+# For Runnig celery worker : celery -A core worker --pool=solo -l info
