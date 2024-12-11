@@ -1,4 +1,4 @@
-from .apis.views import paymob, stripe
+from .apis.views.gateways import paymob, stripe
 from django.urls import path
 
 urlpatterns = [

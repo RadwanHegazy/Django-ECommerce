@@ -6,13 +6,9 @@ from rest_framework.response import Response
 from rest_framework import status
 
 class BaseCheckoutView(APIView) : 
-    checkout_by = None
     permission_classes = [IsAuthenticated]
-
-    def post(self, request) : 
-        """Must Return the checkout url"""
-        pass
-
+    checkout_gateway = None
+    serializer_class = None
 
     def get(self, request) :
         payment_id = request.GET.get('payment_id', None)
@@ -31,3 +27,12 @@ class BaseCheckoutView(APIView) :
         except Checkout.DoesNotExist:
             raise ValidationError("Checkout Not Found ")
         
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data,context={
+            'user' : request.user,
+            'checkout_gateway' : self.checkout_gateway
+        })
+        if serializer.is_valid() : 
+            res = serializer.save()
+            return Response(res, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
