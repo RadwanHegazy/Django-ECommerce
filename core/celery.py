@@ -1,8 +1,10 @@
 from __future__ import absolute_import, unicode_literals
 import os
-
+from dotenv import load_dotenv
 from celery import Celery
 from django.conf import settings
+
+load_dotenv()
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',f'core.settings.{os.getenv("SERVER_STATE")}')
 
