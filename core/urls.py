@@ -18,5 +18,7 @@ urlpatterns = [
     path('api/v1/category/', include('category.urls')),
     path('api/v1/product/', include('product.urls')),
     path('api/v1/comment/', include('comment.urls')),
+    path("api/v1/checkout/", include('checkout.urls')),
+    
     path('__docs__/', schema_view.with_ui('swagger', cache_timeout=0), name='docs'),
 ]
