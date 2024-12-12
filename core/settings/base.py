@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EET'
 
 USE_I18N = True
 
@@ -178,6 +178,11 @@ CELERY_TIMEZONE = 'Africa/Cairo'
 # Stripe
 STRIPE_TEST_PUBLIC_KEY = os.getenv('STRIPE_TEST_PUBLIC_KEY')
 STRIPE_TEST_SECRET_KEY = os.getenv('STRIPE_TEST_SECRET_KEY')
-
 STRIPE_REDIRECT_URL = "http://localhost:8000/api/v1/checkout/stripe/" # NOTE: this is for example , but in the production add the real one
+
+# Paymob
 PAYMOB_REDIRECT_URL = "http://localhost:8000/api/v1/checkout/paymob/" # NOTE: this is for example , but in the production add the real one
+PAYMOB_INTEGERATION_ID = os.getenv("PAYMOB_INTEGERATION_ID")
+PAYMOB_API_KEY = os.getenv("PAYMOB_API_KEY")
+PAYMOB_MERCHANT_ID = os.getenv("PAYMOB_MERCHANT_ID")
+PAYMOB_IFRAME_ID= os.getenv("PAYMOB_IFRAME_ID")

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from ..models import Checkout
-from global_utills.checkout_packages import stripe_checkout
+from global_utills.checkout_packages import stripe_checkout, paymob_checkout
 
 class BaseCheckoutSerializer(serializers.ModelSerializer) :
     checkout_url = None
@@ -25,5 +25,4 @@ class PaymobCheckoutSerializer(BaseCheckoutSerializer) :
 
     def save(self, **kwargs):
         checkout_model = super().save(**kwargs)
-        self.checkout_url = "PAYMOB_CHECKOUT_URL"
-    
+        self.checkout_url = paymob_checkout(checkout_model)
