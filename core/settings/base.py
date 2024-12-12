@@ -179,5 +179,5 @@ CELERY_TIMEZONE = 'Africa/Cairo'
 STRIPE_TEST_PUBLIC_KEY = os.getenv('STRIPE_TEST_PUBLIC_KEY')
 STRIPE_TEST_SECRET_KEY = os.getenv('STRIPE_TEST_SECRET_KEY')
 
-REDIRECT_SUCCESS_URL = "http://localhost:8000/checkout/success" # NOTE: this is for example , but in the production add the real one
-REDIRECT_ERROR_URL = "http://localhost:8000/checkout/error" # NOTE: this is for example , but in the production add the real one
+STRIPE_REDIRECT_URL = "http://localhost:8000/api/v1/checkout/stripe/" # NOTE: this is for example , but in the production add the real one
+PAYMOB_REDIRECT_URL = "http://localhost:8000/api/v1/checkout/paymob/" # NOTE: this is for example , but in the production add the real one
