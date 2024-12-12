@@ -33,6 +33,8 @@ class BaseCheckoutView(APIView) :
             'checkout_gateway' : self.checkout_gateway
         })
         if serializer.is_valid() : 
-            res = serializer.save()
-            return Response(res, status=status.HTTP_201_CREATED)
+            serializer.save()
+            return Response({
+                'url' : serializer.checkout_url
+            }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

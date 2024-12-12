@@ -1,8 +1,10 @@
 from rest_framework import serializers
 from ..models import Checkout
+from global_utills.checkout_packages import stripe_checkout
 
 class BaseCheckoutSerializer(serializers.ModelSerializer) :
-    
+    checkout_url = None
+
     class Meta:
         model = Checkout
         fields = ['quantity','product']
@@ -16,16 +18,12 @@ class BaseCheckoutSerializer(serializers.ModelSerializer) :
 class StripeCheckoutSerializer(BaseCheckoutSerializer) : 
 
     def save(self, **kwargs):
-        super().save(**kwargs)
-        return {
-            'url' : "STRIPE_CHECKOUT_URL"
-        }
+        checkout_model = super().save(**kwargs)
+        self.checkout_url = stripe_checkout(checkout_model)
     
 class PaymobCheckoutSerializer(BaseCheckoutSerializer) : 
 
     def save(self, **kwargs):
-        super().save(**kwargs)
-        return {
-            'url' : "Paymob_CHECKOUT_URL"
-        }
+        checkout_model = super().save(**kwargs)
+        self.checkout_url = "PAYMOB_CHECKOUT_URL"
     
