@@ -1,21 +1,6 @@
-version: '3.8'
 
 services:
-  db:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: dj_user
-      MYSQL_PASSWORD: userpassword
-    volumes:
-      - db_data:/var/lib/mysql
-
-  redis:
-    image: redis:latest
-    restart: always
-
+  
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -25,24 +10,51 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+    networks:
+      - main_net
     depends_on:
       - db
       - redis
     environment:
-      - DATABASE_URL=mysql://dj_user:userpassword@db/mydatabase
+      - DATABASE_URL=postgres://radwan:radwan123@db:5432/master
       - REDIS_URL=redis://redis:6379
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+    
+    volumes:
+      - pgdata2:/var/lib/postgresql/data
+    networks:
+      - main_net
+
+  redis:
+    image: redis:latest
+    restart: always
+    networks:
+      - main_net
+
 
   celery:
     build: .
     command: celery -A core worker --pool=solo -l info
+    networks:
+      - main_net
     volumes:
       - .:/app
     depends_on:
       - redis
       - db
     environment:
-      - DATABASE_URL=mysql://dj_user:userpassword@db/mydatabase
-      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgres://radwan:radwan123@db:5432/master
+      - CELERY_BROKER_URL = "redis://redis:6379/0"
+
 
 volumes:
-  db_data:
+  pgdata2:
+
+networks:
+  main_net:
+    driver: bridge
