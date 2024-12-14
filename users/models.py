@@ -4,10 +4,10 @@ from .managers import CustomUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 from cloudinary.models import CloudinaryField
 
-class LoginByChoices(models.Choices) :
-    email = 'email'
-    facebook = "facebook"
-    google = "google"
+class LoginByChoices(models.TextChoices) :
+    email = 'email', "email"
+    facebook = "facebook", "facebook"
+    google = "google", "google"
 
 class User (AbstractUser) : 
     objects = CustomUserManager()
