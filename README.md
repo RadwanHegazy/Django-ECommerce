@@ -59,7 +59,10 @@ git clone https://github.com/RadwanHegazy/Django-ECommerce.git
 cd Django-ECommerce
 ```
 
+
 ## Running Manually
+
+### Set the env vars in `example.env` for running the server without issues
 
 ```
 pip install -r requirements.txt
@@ -68,6 +71,7 @@ pip install -r requirements.txt
 ```
 python manage.py migrate
 ```
+
 
 ```
 python manage.py runserver
@@ -78,22 +82,21 @@ Running Celery behind the server
 celery -A core worker --pool=solo -l info
 ```
 
-**NOTE**
+**NOTES**
 
-1. Check for redis is running locally on port 6379
-2. Check that PostgreSQL is running locally on port 5432
+1. Check for `redis` is running locally on port `6379`
+2. Check that `PostgreSQL` is running locally on port `5432`
 
 
 ## Running via docker
 
-**NOTE: You must have docker in your pc.**
+### Set the env vars in `example.env` for running the server without issues
 
+**NOTE: You must have docker in your pc.**
 ```
 docker-compose up --build
 ```
 
-**NOTE**
-    - Newsletter cannot be sending message to client, And for make it able to do that set the `EMAIN_HOST_USER` and `EMAIL_HOST_PASSWORD` in example.env file 
 
 ### Now server is running in http://localhost:8000
 
