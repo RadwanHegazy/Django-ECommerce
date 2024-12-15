@@ -92,6 +92,9 @@ celery -A core worker --pool=solo -l info
 docker-compose up --build
 ```
 
+**NOTE**
+    - Newsletter cannot be sending message to client, And for make it able to do that set the `EMAIN_HOST_USER` and `EMAIL_HOST_PASSWORD` in example.env file 
+
 ### Now server is running in http://localhost:8000
 
 
