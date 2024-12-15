@@ -3,7 +3,10 @@ services:
   
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py makemigrations users newsletter category product_image dj_auth_package product comment checkout && 
+              python manage.py migrate && 
+              python manage.py runserver 0.0.0.0:8000"    
     env_file:
       - "example.env"
       
@@ -27,7 +30,7 @@ services:
       - POSTGRES_PASSWORD=postgres123
     
     volumes:
-      - pgdata2:/var/lib/postgresql/data
+      - pgdata3:/var/lib/postgresql/data
     networks:
       - main_net
 
@@ -55,7 +58,7 @@ services:
       - "example.env"
 
 volumes:
-  pgdata2:
+  pgdata3:
 
 networks:
   main_net:
