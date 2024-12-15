@@ -5,7 +5,8 @@ services:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     env_file:
-      - ".env"
+      - "example.env"
+      
     volumes:
       - .:/app
     ports:
@@ -50,7 +51,8 @@ services:
     environment:
       - DATABASE_URL=postgres://radwan:radwan123@db:5432/master
       - CELERY_BROKER_URL = "redis://redis:6379/0"
-
+    env_file:
+      - "example.env"
 
 volumes:
   pgdata2:
