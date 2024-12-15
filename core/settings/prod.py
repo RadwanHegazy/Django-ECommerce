@@ -1,14 +1,23 @@
 from .base import *
-import dj_database_url
+from urllib.parse import urlparse
 
-DEBUG = False
-ALLOWED_HOSTS = ["localhost","localhost:8000"]
+DEBUG = True
+ALLOWED_HOSTS = ["127.0.0.1","127.0.0.1:8000","localhost","localhost:8000","0.0.0.0","0.0.0.0:8000"]
 
+
+url = urlparse(os.environ.get("DATABASE_URL"))
 
 DATABASES = {
-    'default': dj_database_url.parse(os.getenv("MYSQL_DB_URL"))
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "postgres123",
+        "HOST": "db",  # set in docker-compose.yml
+        "PORT": 5432,  # default postgres port
+    }
 }
-
+CELERY_BROKER_URL = "redis://redis:6379/1"
 
 CACHES = {
     'default': {
